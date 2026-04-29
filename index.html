@@ -1195,6 +1195,738 @@
 
   .proc-source-note strong { color: var(--text); font-weight: 600; }
 
+  /* ============================================== */
+  /* VISTA ESQUEMA — Grilla por filas                */
+  /* ============================================== */
+  .schema-container {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 24px;
+    overflow-x: auto;
+    position: relative;
+  }
+
+  .schema-canvas {
+    position: relative;
+  }
+
+  .schema-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Fondo del canvas explícito en z-index 0 */
+  .schema-canvas {
+    z-index: 0;
+  }
+
+  /* Header fijo de cada columna (posición absoluta) */
+  .schema-col-header-fixed {
+    position: absolute;
+    text-align: center;
+    z-index: 2;
+  }
+
+  .schema-col-num {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    border-radius: 50%;
+    background: var(--bg-0);
+    border: 1px solid var(--line);
+    color: var(--blue);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .schema-col-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .schema-col-subtitle {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 3px;
+  }
+
+  /* Nodos individuales (posicionados absolutamente) */
+  .schema-node {
+    position: absolute;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 11px 13px;
+    transition: all 0.15s;
+    cursor: help;
+    z-index: 3;
+    overflow: hidden;
+  }
+
+  /* Nodos regulares de cols 1-3 (no aggregator, no final): altura uniforme con flex */
+  .schema-node:not(.schema-aggregator):not(.is-final) {
+    height: 76px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .schema-node:hover {
+    border-color: var(--blue);
+    background: var(--bg-3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+  }
+
+  .schema-node-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #ffffff;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+
+  .schema-node-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+  }
+
+  .schema-node-detail {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* Variantes por estado */
+  .schema-node.s-0 { border-left: 3px solid var(--green); }
+  .schema-node.s-1 { border-left: 3px solid var(--amber); }
+  .schema-node.s-2 { border-left: 3px solid var(--red); }
+  .schema-node.s-input { border-left: 3px solid var(--blue); }
+
+  .schema-node.s-0 .schema-node-value { color: var(--green); }
+  .schema-node.s-1 .schema-node-value { color: var(--amber); }
+  .schema-node.s-2 .schema-node-value { color: var(--red); }
+  .schema-node.s-input .schema-node-value { color: var(--blue); }
+
+  /* Celda vacía (HR/V no tienen transformación) */
+  .schema-skip {
+    position: absolute;
+    border: 1px dashed var(--line);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-faint);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 2;
+    opacity: 0.45;
+  }
+
+  /* Nodo de Agregación (Score) */
+  .schema-agg {
+    position: absolute;
+    background: var(--bg-0);
+    border: 1.5px solid var(--blue);
+    border-radius: 6px;
+    padding: 12px 14px;
+    z-index: 3;
+    cursor: help;
+    transition: all 0.15s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .schema-agg:hover {
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
+    z-index: 10;
+  }
+
+  .schema-agg .schema-node-label {
+    font-size: 10px;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+
+  .schema-agg-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    padding: 4px 0;
+  }
+
+  .schema-agg-row .mono {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .schema-agg-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    border-top: 1px solid var(--line);
+    padding-top: 8px;
+    margin-top: 4px;
+  }
+
+  .schema-agg-total .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    color: var(--blue);
+  }
+
+  /* Nodo final (Diagnóstico) */
+  .schema-final {
+    position: absolute;
+    background: var(--bg-0);
+    border: 2px solid var(--blue);
+    border-radius: 6px;
+    padding: 16px 14px;
+    text-align: center;
+    z-index: 3;
+    cursor: help;
+    transition: all 0.15s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .schema-final:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+  }
+
+  .schema-final.s-normal { border-color: var(--green); background: rgba(74, 222, 128, 0.06); }
+  .schema-final.s-warn   { border-color: var(--amber); background: rgba(251, 191, 36, 0.06); }
+  .schema-final.s-fail   { border-color: var(--orange); background: rgba(251, 146, 60, 0.06); }
+  .schema-final.s-crit   { border-color: var(--red); background: rgba(248, 113, 113, 0.06); }
+
+  .schema-final .schema-node-label {
+    font-size: 9px;
+    margin-bottom: 10px;
+  }
+
+  .schema-final-state {
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .schema-final.s-warn   .schema-final-state { color: var(--amber); }
+  .schema-final.s-fail   .schema-final-state { color: var(--orange); }
+  .schema-final.s-crit   .schema-final-state { color: var(--red); }
+  .schema-final.s-normal .schema-final-state { color: var(--green); }
+
+  .schema-final-mode {
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px;
+    font-style: italic;
+    color: var(--text-dim);
+    line-height: 1.35;
+  }
+
+  /* Tablas laterales */
+  .schema-table-node {
+    position: absolute;
+    background: var(--bg-0);
+    border: 1.5px dashed var(--amber);
+    border-radius: 6px;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .schema-table-node:hover {
+    background: var(--amber-bg);
+    border-style: solid;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  .schema-table-icon {
+    font-size: 16px;
+    color: var(--amber);
+    margin-bottom: 3px;
+  }
+
+  .schema-table-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--amber);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .schema-table-hint {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-top: 2px;
+  }
+
+  /* Tooltip */
+  .schema-tooltip {
+    position: absolute;
+    background: var(--bg-0);
+    border: 1px solid var(--blue);
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 11px;
+    color: var(--text);
+    line-height: 1.45;
+    max-width: 240px;
+    z-index: 100;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.12s;
+  }
+
+  .schema-tooltip.visible {
+    opacity: 1;
+  }
+
+  /* Leyenda */
+  .schema-legend {
+    display: flex;
+    gap: 22px;
+    justify-content: center;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line-soft);
+    flex-wrap: wrap;
+  }
+
+  .schema-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #ffffff;
+  }
+
+  .schema-legend-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+  }
+
+  .schema-legend-line {
+    width: 32px;
+    height: 0;
+    border-top: 2px solid var(--blue);
+  }
+
+  .schema-legend-line.special {
+    border-top: 2px solid #c084fc;
+  }
+
+  .schema-legend-line.dashed {
+    border-top: 1.5px dashed var(--amber);
+  }
+
+  /* === Headers de columna (posición absoluta) === */
+  .schema-col-header-block {
+    text-align: center;
+  }
+
+  .schema-col-header-block .schema-col-num {
+    margin: 0 auto 6px;
+  }
+
+  /* === Nodo agregador (col 4, ocupa varias filas) === */
+  .schema-aggregator {
+    background: var(--bg-2);
+    border: 1px solid var(--blue);
+    border-radius: 8px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .schema-aggregator:hover {
+    background: var(--bg-3);
+    box-shadow: 0 4px 16px rgba(96, 165, 250, 0.2);
+  }
+
+  .schema-aggregator .schema-node-label {
+    color: var(--blue);
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  /* Tabla del agregador (pesos y bonos) */
+  .aggr-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .aggr-section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+
+  .aggr-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    background: var(--bg-0);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .aggr-table th {
+    background: rgba(96, 165, 250, 0.12);
+    color: var(--blue);
+    padding: 4px 6px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .aggr-table td {
+    padding: 4px 6px;
+    text-align: center;
+    color: #ffffff;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .aggr-table td:first-child {
+    text-align: left;
+    color: var(--text-dim);
+    font-size: 10px;
+  }
+
+  .aggr-table td.mono.s-0 { color: var(--green); font-weight: 700; }
+  .aggr-table td.mono.s-1 { color: var(--amber); font-weight: 700; }
+  .aggr-table td.mono.s-2 { color: var(--red); font-weight: 700; }
+
+  .aggr-table tr:last-child td { border-bottom: none; }
+
+  .aggr-table tr.active {
+    background: rgba(251, 191, 36, 0.12);
+  }
+  .aggr-table tr.active td { color: var(--amber); font-weight: 600; }
+  .aggr-table tr.active td:first-child { color: var(--amber); }
+
+  .aggr-table tr.aggr-subtotal td {
+    background: rgba(96, 165, 250, 0.10);
+    font-weight: 700;
+    color: #ffffff;
+    border-top: 1px solid var(--blue);
+  }
+
+  .aggr-total-bar {
+    background: var(--blue);
+    color: var(--bg-0);
+    border-radius: 4px;
+    padding: 9px 12px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-top: auto;
+  }
+
+  .aggr-total-bar strong {
+    font-size: 22px;
+    margin-left: 6px;
+  }
+
+  /* Nodo final destacado (DIAGNÓSTICO) */
+  .schema-node.is-final {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg-2);
+    border: 2px solid var(--blue);
+    text-align: center;
+    padding: 14px;
+  }
+
+  .schema-node.is-final.s-normal { border-color: var(--green); background: rgba(74, 222, 128, 0.08); }
+  .schema-node.is-final.s-warn   { border-color: var(--amber); background: rgba(251, 191, 36, 0.08); }
+  .schema-node.is-final.s-fail   { border-color: var(--orange); background: rgba(251, 146, 60, 0.08); }
+  .schema-node.is-final.s-crit   { border-color: var(--red); background: rgba(248, 113, 113, 0.08); }
+
+  .schema-node.is-final .schema-node-label {
+    font-size: 11px;
+    color: #ffffff;
+    margin-bottom: 6px;
+  }
+
+  .final-score {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 36px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+    margin: 4px 0 8px;
+  }
+
+  .final-state {
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .schema-node.is-final.s-warn   .final-state { color: var(--amber); }
+  .schema-node.is-final.s-fail   .final-state { color: var(--orange); }
+  .schema-node.is-final.s-crit   .final-state { color: var(--red); }
+  .schema-node.is-final.s-normal .final-state { color: var(--green); }
+
+  .final-mode {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.35;
+    opacity: 0.85;
+  }
+
+  /* === Versiones BIG del nodo final (más grandes y contrastadas) === */
+  .final-score-big {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 56px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+    margin: 8px 0 10px;
+    text-align: center;
+  }
+
+  .final-state-big {
+    font-family: 'Manrope', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .schema-node.is-final.s-warn   .final-state-big { color: var(--amber); }
+  .schema-node.is-final.s-fail   .final-state-big { color: var(--orange); }
+  .schema-node.is-final.s-crit   .final-state-big { color: var(--red); }
+  .schema-node.is-final.s-normal .final-state-big { color: var(--green); }
+
+  .final-mode-big {
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    color: #ffffff;
+    line-height: 1.4;
+    text-align: center;
+    opacity: 0.9;
+  }
+
+  /* === Tablas internas del Ponderador === */
+  .schema-aggregator {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 12px !important;
+    background: var(--bg-2) !important;
+  }
+
+  .aggr-section {
+    flex: 0 0 auto;
+  }
+
+  .aggr-section-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+    text-align: center;
+    opacity: 0.8;
+  }
+
+  .aggr-mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-0);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .aggr-mini-table tr {
+    transition: background 0.15s;
+  }
+
+  .aggr-mini-table tr.active {
+    background: var(--amber-bg);
+    box-shadow: inset 2px 0 0 var(--amber);
+  }
+
+  .aggr-mini-table tr.active td {
+    color: var(--amber);
+    font-weight: 700;
+  }
+
+  .aggr-mini-table tr.aggr-subtotal {
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+  }
+
+  .aggr-mini-table tr.aggr-subtotal td {
+    font-size: 11px;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 5px 8px;
+  }
+
+  .aggr-mini-table tr.aggr-subtotal td strong {
+    color: var(--blue);
+    font-size: 13px;
+  }
+
+  .aggr-mini-table td {
+    padding: 4px 8px;
+    font-size: 11px;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .aggr-mini-table tr:last-child td { border-bottom: none; }
+
+  .aggr-mini-table td.mono {
+    font-family: 'JetBrains Mono', monospace;
+    text-align: right;
+    color: #ffffff;
+  }
+
+  .aggr-plus {
+    text-align: center;
+    color: var(--amber);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    margin: 2px 0;
+  }
+
+  .aggr-total-box {
+    background: var(--blue);
+    color: var(--bg-0);
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+  }
+
+  .aggr-total-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--bg-0);
+  }
+
+  .aggr-total-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--bg-0);
+    line-height: 1;
+  }
+
+  /* === Mejoras de contraste en otros componentes === */
+  .schema-col-subtitle {
+    color: #ffffff !important;
+    opacity: 0.65;
+    font-size: 11px !important;
+  }
+
+  .schema-table-hint {
+    color: #ffffff !important;
+    opacity: 0.6;
+    font-size: 10.5px !important;
+  }
+
+  /* Tabla lateral compacta — fix display flex */
+  .schema-table-node {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+  }
+
+  .schema-table-node .schema-table-name {
+    margin: 0;
+  }
+
+
 </style>
 </head>
 <body>
@@ -1223,6 +1955,9 @@
     </button>
     <button class="nav-tab" data-view="proc">
       <span class="tab-num">02</span>Procesamiento
+    </button>
+    <button class="nav-tab" data-view="schema">
+      <span class="tab-num">03</span>Esquema
     </button>
   </div>
 
@@ -1586,6 +2321,30 @@
     </div>
 
   </div><!-- /view-proc -->
+
+  <!-- ================================================== -->
+  <!-- VISTA ESQUEMA (diagrama de flujo)                  -->
+  <!-- ================================================== -->
+  <div class="view" id="view-schema">
+
+    <div class="proc-current-readout" id="schema-readout">
+      <div class="proc-readout-label">Mediciones actuales</div>
+      <div class="proc-readout-values" id="schema-readout-values">
+        <!-- inyectado por JS -->
+      </div>
+      <button class="proc-readout-link" data-view="main">← Ir a Principal para modificar</button>
+    </div>
+
+    <div class="proc-intro">
+      <h3>Diagrama del flujo completo del modelo</h3>
+      <p>Vista panorámica del procesamiento — todo el sistema de un solo vistazo. Las cinco columnas representan las etapas (entradas → transformaciones → clasificación → agregación → diagnóstico). Las <strong>tres tablas de referencia</strong> aparecen como nodos laterales conectados con líneas punteadas a la etapa donde entran. Pase el mouse sobre cualquier nodo para ver detalles.</p>
+    </div>
+
+    <div class="schema-container" id="schema-container">
+      <!-- inyectado por JS -->
+    </div>
+
+  </div><!-- /view-schema -->
 
 </div>
 
@@ -2010,6 +2769,11 @@ function update() {
   if (procView && procView.classList.contains('active')) {
     renderProcSteps();
   }
+  // Si la vista de esquema está activa, refrescarla también
+  const schemaView = document.getElementById('view-schema');
+  if (schemaView && schemaView.classList.contains('active')) {
+    renderSchema();
+  }
 }
 
 // ===== EVENTOS =====
@@ -2144,6 +2908,7 @@ function activateView(target) {
   if (tabBtn) tabBtn.classList.add('active');
   document.getElementById('view-' + target).classList.add('active');
   if (target === 'proc') renderProcSteps();
+  if (target === 'schema') renderSchema();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -2562,6 +3327,307 @@ function renderProcSteps() {
 // ============================================================
 // MODALES (3 tipos: nominal, criteria, states)
 // ============================================================
+// ============================================================
+// RENDER DEL ESQUEMA (vista 03 — diagrama de flujo)
+// ============================================================
+function renderSchema() {
+  const mw = state.mw, t = state.t, hr = state.hr, v = state.v, dp = state.dp;
+  const rT  = classifyT(t, mw);
+  const rHR = classifyHR(hr);
+  const rV  = classifyV(v);
+  const rDP = classifyDP(dp, t);
+
+  const states = { t: rT.state, hr: rHR.state, v: rV.state, dp: rDP.state };
+  const trips = { t: rT.trip, v: rV.trip };
+  const indiv = 3*states.dp + 2*states.t + 2*states.v + 1*states.hr;
+  const b1 = (states.dp >= 1 && states.t >= 1) ? 2 : 0;
+  const b2 = (states.dp >= 1 && states.hr >= 1) ? 2 : 0;
+  const b3 = (states.t >= 1 && states.v >= 1) ? 1.5 : 0;
+  const b4 = (states.hr >= 1 && states.t >= 1) ? 1 : 0;
+  const b5 = (states.dp >= 1 && states.t >= 1 && states.hr >= 1) ? 3 : 0;
+  const bonusTotal = b1 + b2 + b3 + b4 + b5;
+  const scoreTotal = indiv + bonusTotal;
+
+  let matched = null;
+  for (const row of STATES_TABLE) {
+    if (row.test(states, trips)) { matched = row; break; }
+  }
+  const stateClassMap = {
+    'Normal': 's-normal',
+    'Observación': 's-warn', 'Observación reforzada': 's-warn',
+    'Advertencia': 's-warn', 'Advertencia alta': 's-warn',
+    'Falla probable': 's-fail', 'Falla probable alta': 's-fail',
+    'Falla inminente': 's-crit', 'Disparo recomendado': 's-crit'
+  };
+  const finalCls = matched ? (stateClassMap[matched.state] || 's-normal') : 's-normal';
+
+  const fmt  = (n, dec=1) => n.toFixed(dec);
+  const sign = (n, dec=1) => (n>=0?'+':'') + n.toFixed(dec);
+
+  const CANVAS_W = 1320;
+  const CANVAS_H = 760;
+
+  const COL = [
+    { x:  20, w: 210, num: '01', title: 'ENTRADAS',       sub: 'Mediciones crudas' },
+    { x: 280, w: 230, num: '02', title: 'TRANSFORMACIÓN', sub: 'Magnitudes derivadas' },
+    { x: 560, w: 210, num: '03', title: 'CLASIFICACIÓN',  sub: 'Estado por variable' },
+    { x: 820, w: 250, num: '04', title: 'PONDERACIÓN',    sub: 'Pesos + bonos → Score' },
+    { x: 1110, w: 200, num: '05', title: 'DIAGNÓSTICO',   sub: 'Estado final' }
+  ];
+  const cx = (i) => COL[i].x + COL[i].w / 2;
+  const cR = (i) => COL[i].x + COL[i].w;
+  const cL = (i) => COL[i].x;
+
+  const HEADER_Y = 18;
+  const TABLE_Y  = 70;
+  const ROW_LOAD = 175;
+  const ROW_T    = 305;
+  const ROW_HR   = 395;
+  const ROW_V    = 485;
+  const ROW_DP   = 575;
+  const NODE_H   = 76;
+
+  const nY = (yTop) => yTop + NODE_H / 2;
+
+  const nodes = [
+    { col:0, y:ROW_LOAD, label:'CARGA (MW)', value: mw + ' MW', detail: 'Potencia activa', cls:'s-input',
+      tip: 'Carga activa actual del generador. Es la entrada que define qué temperatura nominal esperar para el devanado.' },
+    { col:0, y:ROW_T, label:'T° MED.', value: fmt(t)+' °C', detail:'RTD devanado', cls:'s-input',
+      tip: 'Temperatura medida del devanado por los RTDs.' },
+    { col:1, y:ROW_T, label:'T_nom · ΔT', value: fmt(rT.nom)+' °C  →  '+sign(rT.residuo)+' °C', detail:'40+80·(MW/156)²  ·  ΔT = T_med − T_nom', cls:'s-input',
+      tip: 'T_nom: temperatura esperada para esta carga. ΔT: residuo (cuánto se aleja la medición del nominal). ΔT es el valor que se compara contra los criterios.' },
+    { col:2, y:ROW_T, label:'s_T', value: states.t+' · '+['NORMAL','ADV','FALLA'][states.t], detail:'compara ΔT con criterios', cls:'s-'+states.t,
+      tip: 'Estado de T°. ΔT se compara contra ±3 °C (normal), +3 a +5 °C (adv), >+5 °C o ≥130 °C (falla).' },
+    { col:0, y:ROW_HR, label:'HR', value: hr+' %', detail:'Humedad relativa', cls:'s-input',
+      tip: 'Humedad relativa ambiente. No requiere transformación: se compara directamente contra bandas operativas.' },
+    { col:2, y:ROW_HR, label:'s_HR', value: states.hr+' · '+['NORMAL','ADV','FALLA'][states.hr], detail:'compara HR con bandas', cls:'s-'+states.hr,
+      tip: 'Estado de humedad. HR se compara contra: 30–60 % normal, 60–70 % adv, >70 % falla.' },
+    { col:0, y:ROW_V, label:'VIBRACIÓN', value: fmt(v)+' mm/s', detail:'Velocidad RMS', cls:'s-input',
+      tip: 'Vibración RMS de pedestal. Se compara directamente contra bandas ISO 20816-2.' },
+    { col:2, y:ROW_V, label:'s_V', value: states.v+' · '+['NORMAL','ADV','FALLA'][states.v], detail:'compara RMS con ISO 20816-2', cls:'s-'+states.v,
+      tip: 'Estado de vibración. Bandas ISO: <2,5 normal, 2,5–3,8 adv, >3,8 falla.' },
+    { col:0, y:ROW_DP, label:'DP', value: dp+' mV', detail:'Qm percentil 95', cls:'s-input',
+      tip: 'Magnitud de descargas parciales medida (Qm). Es la lectura cruda que se compara contra los umbrales.' },
+    { col:1, y:ROW_DP, label:'f(T) · UMBRALES DP', value: rDP.uAdv.toFixed(0)+' / '+rDP.uFall.toFixed(0)+' mV', detail:'f(T)='+rDP.corr.toFixed(3)+'  ·  239·f(T) / 500·f(T)', cls:'s-input',
+      tip: 'Umbrales corregidos por la temperatura del estator. A más calor, umbrales más bajos. Se calculan a partir de los 239/500 mV base por f(T).' },
+    { col:2, y:ROW_DP, label:'s_DP', value: states.dp+' · '+['NORMAL','ADV','FALLA'][states.dp], detail:'compara Qm con umbral(T)', cls:'s-'+states.dp,
+      tip: 'Estado de DP. Necesita DOS entradas: Qm (medición de col 1) y los umbrales corregidos (col 2). El estado se obtiene comparando Qm contra esos umbrales.' }
+  ];
+
+  const wAggrTop = ROW_T;
+  const wAggrBot = ROW_DP + NODE_H;
+  const wAggrH   = wAggrBot - wAggrTop;
+
+  const diagH   = 200;
+  const diagTop = wAggrTop + (wAggrH - diagH) / 2;
+
+  const tables = [
+    { col:1, modal:'nominal',   name:'TABLA NOMINAL',   hint:'23 cargas' },
+    { col:2, modal:'criteria',  name:'TABLA CRITERIOS', hint:'4 vars × 3 niveles' },
+    { col:4, modal:'states',    name:'TABLA ESTADOS',   hint:'15 condiciones' }
+  ];
+
+  const flows = [];
+  const arrow = (x1, y1, x2, y2, cls = '') => {
+    const dx = (x2 - x1) * 0.45;
+    return `<path d="M ${x1} ${y1} C ${x1+dx} ${y1}, ${x2-dx} ${y2}, ${x2} ${y2}" class="schema-flow ${cls}" />`;
+  };
+
+  // Sin cabezas de flecha, las líneas tocan limpiamente el borde de los nodos
+  const fromR = (i) => cR(i);
+  const toL   = (i) => cL(i);
+
+  // Fila T°: T° med (col0) → T_nom·ΔT (col1) → s_T (col2)
+  flows.push(arrow(fromR(0), nY(ROW_T), toL(1), nY(ROW_T)));
+  flows.push(arrow(fromR(1), nY(ROW_T), toL(2), nY(ROW_T)));
+
+  // Fila HR: HR (col0) → s_HR (col2) — bypass directo
+  // Fila HR: sin línea (HR está en la misma fila horizontal que s_HR, lectura por proximidad)
+
+  // Fila V: V (col0) → s_V (col2) — bypass directo
+  // Fila V: sin línea (V está en la misma fila horizontal que s_V, lectura por proximidad)
+
+  // Fila DP: DP (col0) → Umbrales (col1) → s_DP (col2)
+  flows.push(arrow(fromR(0), nY(ROW_DP), toL(1), nY(ROW_DP)));
+  flows.push(arrow(fromR(1), nY(ROW_DP), toL(2), nY(ROW_DP)));
+
+  // Conexión cruzada única: Carga → T_nom·ΔT
+  // Ruta: salida inferior de Carga, baja por encima de T_nom, entra por la izquierda
+  // Conexión cruzada Carga → T_nom·ΔT eliminada (lectura por proximidad)
+
+  // Convergencia: 4 estados → Ponderación
+  const aggrInY = wAggrTop + wAggrH / 2;
+  flows.push(arrow(fromR(2), nY(ROW_T),  toL(3), aggrInY));
+  flows.push(arrow(fromR(2), nY(ROW_HR), toL(3), aggrInY));
+  flows.push(arrow(fromR(2), nY(ROW_V),  toL(3), aggrInY));
+  flows.push(arrow(fromR(2), nY(ROW_DP), toL(3), aggrInY));
+
+  // Ponderación → Diagnóstico
+  flows.push(arrow(fromR(3), aggrInY, cL(4), diagTop + diagH / 2));
+
+  let html = '';
+
+  COL.forEach((c) => {
+    html += `
+      <div class="schema-col-header-block" style="position:absolute; left:${c.x}px; top:${HEADER_Y}px; width:${c.w}px;">
+        <div class="schema-col-num">${c.num}</div>
+        <div class="schema-col-title">${c.title}</div>
+        <div class="schema-col-subtitle">${c.sub}</div>
+      </div>
+    `;
+  });
+
+  tables.forEach(tb => {
+    html += `
+      <div class="schema-table-node" data-modal="${tb.modal}"
+           style="position:absolute; left:${COL[tb.col].x}px; top:${TABLE_Y}px; width:${COL[tb.col].w}px; height:64px;">
+        <div class="schema-table-name">${tb.name}</div>
+        <div class="schema-table-hint">${tb.hint} · click para detalle</div>
+      </div>
+    `;
+  });
+
+  nodes.forEach(n => {
+    const col = COL[n.col];
+    html += `
+      <div class="schema-node ${n.cls}" data-tip="${n.tip.replace(/"/g,'&quot;')}"
+           style="position:absolute; left:${col.x}px; top:${n.y}px; width:${col.w}px;">
+        <div class="schema-node-label">${n.label}</div>
+        <div class="schema-node-value">${n.value}</div>
+        <div class="schema-node-detail">${n.detail}</div>
+      </div>
+    `;
+  });
+
+  const isActive = (s) => s >= 1 ? 'active' : '';
+
+  html += `
+    <div class="schema-node schema-aggregator"
+         data-tip="Ponderación: cada estado s_X se multiplica por su peso (severidad intrínseca). Cuando dos variables apuntan al mismo modo de falla, se suma un bono adicional."
+         style="position:absolute; left:${COL[3].x}px; top:${wAggrTop}px; width:${COL[3].w}px; height:${wAggrH}px;">
+
+      <div class="aggr-section">
+        <div class="aggr-section-title">PESOS POR VARIABLE</div>
+        <table class="aggr-mini-table">
+          <tbody>
+            <tr class="${isActive(states.t)}"><td>T°</td><td class="mono">×2</td><td class="mono">= ${2*states.t}</td></tr>
+            <tr class="${isActive(states.hr)}"><td>HR</td><td class="mono">×1</td><td class="mono">= ${1*states.hr}</td></tr>
+            <tr class="${isActive(states.v)}"><td>V</td><td class="mono">×2</td><td class="mono">= ${2*states.v}</td></tr>
+            <tr class="${isActive(states.dp)}"><td>DP</td><td class="mono">×3</td><td class="mono">= ${3*states.dp}</td></tr>
+            <tr class="aggr-subtotal"><td colspan="2">Subtotal</td><td class="mono"><strong>${indiv}</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="aggr-plus">+</div>
+
+      <div class="aggr-section">
+        <div class="aggr-section-title">BONOS POR CORRELACIÓN</div>
+        <table class="aggr-mini-table">
+          <tbody>
+            <tr class="${b4>0?'active':''}"><td>T°+HR</td><td class="mono">+1</td><td class="mono">${b4>0?'✓':'—'}</td></tr>
+            <tr class="${b3>0?'active':''}"><td>T°+V</td><td class="mono">+1,5</td><td class="mono">${b3>0?'✓':'—'}</td></tr>
+            <tr class="${b1>0?'active':''}"><td>T°+DP</td><td class="mono">+2</td><td class="mono">${b1>0?'✓':'—'}</td></tr>
+            <tr class="${b2>0?'active':''}"><td>HR+DP</td><td class="mono">+2</td><td class="mono">${b2>0?'✓':'—'}</td></tr>
+            <tr class="${b5>0?'active':''}"><td>3 a la vez</td><td class="mono">+3</td><td class="mono">${b5>0?'✓':'—'}</td></tr>
+            <tr class="aggr-subtotal"><td colspan="2">Subtotal</td><td class="mono"><strong>${bonusTotal}</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="aggr-total-box">
+        <span class="aggr-total-label">SCORE</span>
+        <span class="aggr-total-value">${scoreTotal.toFixed(1)}</span>
+      </div>
+    </div>
+  `;
+
+  html += `
+    <div class="schema-node is-final ${finalCls}"
+         data-tip="Resultado final. Se obtiene buscando en la tabla de estados la primera fila cuya condición coincida con los s_X actuales."
+         style="position:absolute; left:${COL[4].x}px; top:${diagTop}px; width:${COL[4].w}px; height:${diagH}px;">
+      <div class="schema-node-label">RESULTADO FINAL</div>
+      <div class="final-score-big">${scoreTotal.toFixed(1)}</div>
+      <div class="final-state-big">${matched ? matched.state : '—'}</div>
+      <div class="final-mode-big">${matched ? matched.mode : '—'}</div>
+    </div>
+  `;
+
+  const svg = `
+    <svg class="schema-svg" viewBox="0 0 ${CANVAS_W} ${CANVAS_H}" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+          <path d="M 0 0 L 12 6 L 0 12 Z" fill="#60a5fa" />
+        </marker>
+        <marker id="arrow-cross" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+          <path d="M 0 0 L 12 6 L 0 12 Z" fill="#a78bfa" />
+        </marker>
+      </defs>
+      <style>
+        .schema-flow { fill: none; stroke: #60a5fa; stroke-width: 2; opacity: 0.9; }
+        .schema-flow.bypass { stroke-width: 1.8; opacity: 0.6; }
+        .schema-flow.cross  { stroke: #a78bfa; stroke-width: 2; opacity: 0.9; }
+      </style>
+      ${flows.join('\n')}
+    </svg>
+  `;
+
+  const legend = `
+    <div class="schema-legend">
+      <div class="schema-legend-item"><span class="schema-legend-line" style="border-color:#60a5fa"></span> Flujo principal</div>
+      <div class="schema-legend-item"><span class="schema-legend-line" style="border-color:#a78bfa"></span> Conexión cruzada (carga → T_nom)</div>
+      <div class="schema-legend-item"><span class="schema-legend-swatch" style="background:#4ade80"></span> Normal</div>
+      <div class="schema-legend-item"><span class="schema-legend-swatch" style="background:#fbbf24"></span> Advertencia</div>
+      <div class="schema-legend-item"><span class="schema-legend-swatch" style="background:#f87171"></span> Falla</div>
+    </div>
+  `;
+
+  document.getElementById('schema-container').innerHTML = `
+    <div class="schema-canvas" style="height: ${CANVAS_H}px; min-width: ${CANVAS_W}px; position:relative">
+      ${svg}
+      ${html}
+      <div class="schema-tooltip" id="schema-tooltip"></div>
+    </div>
+    ${legend}
+  `;
+
+  const tooltip = document.getElementById('schema-tooltip');
+  document.querySelectorAll('#schema-container .schema-node, #schema-container .schema-table-node').forEach(n => {
+    n.addEventListener('mouseenter', (e) => {
+      const tip = e.currentTarget.dataset.tip || '';
+      const modal = e.currentTarget.dataset.modal;
+      let content = tip;
+      if (modal && !tip) content = '<strong>Click para abrir</strong> el detalle de cómo se construyó esta tabla.';
+      if (!content) return;
+      tooltip.innerHTML = content;
+      tooltip.classList.add('visible');
+    });
+    n.addEventListener('mousemove', (e) => {
+      const canvas = document.querySelector('#schema-container .schema-canvas');
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left + 14;
+      const y = e.clientY - rect.top + 14;
+      const maxX = canvas.clientWidth - 280;
+      tooltip.style.left = Math.min(x, maxX) + 'px';
+      tooltip.style.top  = y + 'px';
+    });
+    n.addEventListener('mouseleave', () => tooltip.classList.remove('visible'));
+  });
+
+  document.querySelectorAll('#schema-container .schema-table-node').forEach(b => {
+    b.addEventListener('click', () => openModal(b.dataset.modal));
+  });
+
+  const readoutHtml = `
+    <div class="readout-pill"><span class="rp-key">MW</span><span class="rp-val">${mw}</span></div>
+    <div class="readout-pill s-${rT.state}"><span class="rp-key">T°</span><span class="rp-val">${fmt(t)} °C</span></div>
+    <div class="readout-pill s-${rHR.state}"><span class="rp-key">HR</span><span class="rp-val">${hr} %</span></div>
+    <div class="readout-pill s-${rV.state}"><span class="rp-key">Vib</span><span class="rp-val">${fmt(v)} mm/s</span></div>
+    <div class="readout-pill s-${rDP.state}"><span class="rp-key">DP</span><span class="rp-val">${dp} mV</span></div>
+  `;
+  document.getElementById('schema-readout-values').innerHTML = readoutHtml;
+}
+
 function openModal(kind) {
   const overlay  = document.getElementById('modal-overlay');
   const titleEl  = document.getElementById('modal-title');
