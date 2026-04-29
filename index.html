@@ -647,6 +647,554 @@
     .criteria-table { font-size: 10px; }
     .states-table { font-size: 10px; }
   }
+  /* ===== TABS DE NAVEGACIÓN ===== */
+  .nav-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0;
+  }
+
+  .nav-tab {
+    padding: 12px 24px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-dim);
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: -1px;
+  }
+
+  .nav-tab:hover {
+    color: var(--text);
+  }
+
+  .nav-tab.active {
+    color: var(--blue);
+    border-bottom-color: var(--blue);
+    font-weight: 600;
+  }
+
+  .nav-tab .tab-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-faint);
+    margin-right: 8px;
+  }
+
+  .nav-tab.active .tab-num {
+    color: var(--blue);
+  }
+
+  .view {
+    display: none;
+  }
+
+  .view.active {
+    display: block;
+  }
+
+  /* ===== SECCIÓN PROCESAMIENTO ===== */
+  .proc-intro {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--blue);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+
+  .proc-intro h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .proc-intro p {
+    color: var(--text-dim);
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .proc-intro p + p { margin-top: 8px; }
+
+  /* === Pasos del procesamiento === */
+  .proc-current-readout {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 18px;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(10px);
+    background: rgba(22, 28, 35, 0.92);
+  }
+
+  .proc-readout-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--text-faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .proc-readout-values {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .readout-pill {
+    background: var(--bg-0);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .readout-pill .rp-key {
+    color: var(--text-faint);
+    font-weight: 500;
+  }
+
+  .readout-pill .rp-val {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .readout-pill.s-1 { border-color: var(--amber); }
+  .readout-pill.s-1 .rp-val { color: var(--amber); }
+  .readout-pill.s-2 { border-color: var(--red); }
+  .readout-pill.s-2 .rp-val { color: var(--red); }
+
+  .proc-readout-link {
+    background: transparent;
+    border: 1px solid var(--blue);
+    color: var(--blue);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+
+  .proc-readout-link:hover {
+    background: var(--blue-bg);
+  }
+
+  .proc-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+
+  .proc-step {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .proc-step.uses-table {
+    border-left: 3px solid var(--amber);
+  }
+
+  .proc-step-header {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 16px;
+    padding: 18px 20px;
+    background: var(--bg-2);
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .proc-step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--blue);
+    text-align: center;
+    line-height: 1;
+  }
+
+  .proc-step.uses-table .proc-step-num {
+    color: var(--amber);
+  }
+
+  .proc-step-title-block .step-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .proc-step-title-block .step-subtitle {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  .proc-step-action .table-link-btn {
+    background: var(--amber-bg);
+    color: var(--amber);
+    border: 1px solid var(--amber);
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .proc-step-action .table-link-btn:hover {
+    background: var(--amber);
+    color: var(--bg-0);
+  }
+
+  .proc-step-body {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .proc-step-body.single {
+    grid-template-columns: 1fr;
+  }
+
+  .proc-block {
+    background: var(--bg-0);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+
+  .proc-block-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--text-faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .proc-formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--tealLight, #65b7d4);
+    background: #0a1f35;
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  .proc-explanation {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .proc-explanation strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .proc-data {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+
+  .proc-data .data-key { color: var(--text-dim); }
+  .proc-data .data-val { color: var(--text); font-weight: 500; }
+  .proc-data .data-val.highlight { color: var(--blue); font-weight: 700; }
+  .proc-data .data-val.warn { color: var(--amber); font-weight: 700; }
+  .proc-data .data-val.fail { color: var(--red); font-weight: 700; }
+  .proc-data .data-val.ok { color: var(--green); font-weight: 700; }
+
+  .proc-arrow-down {
+    text-align: center;
+    color: var(--text-faint);
+    font-size: 18px;
+    margin: -8px 0 8px 0;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Estado final destacado */
+  .proc-final {
+    background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    border: 2px solid var(--blue);
+    border-radius: 8px;
+    padding: 24px;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .proc-final.s-warn  { border-color: var(--amber); }
+  .proc-final.s-fail  { border-color: var(--orange); }
+  .proc-final.s-crit  { border-color: var(--red); }
+  .proc-final.s-normal { border-color: var(--green); }
+
+  .proc-final-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .proc-final-state {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .proc-final-mode {
+    font-size: 13px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 20px;
+    overflow-y: auto;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+  }
+
+  .modal-window {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 1100px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    overflow: hidden;
+  }
+
+  .modal-header {
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--line);
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .modal-subtitle {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  .modal-close {
+    background: var(--bg-0);
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    transition: all 0.15s;
+  }
+
+  .modal-close:hover {
+    background: var(--red-bg);
+    color: var(--red);
+    border-color: var(--red);
+  }
+
+  .modal-body {
+    padding: 24px;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+  }
+
+  .modal-body h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+    margin-top: 18px;
+    letter-spacing: -0.01em;
+  }
+
+  .modal-body h4:first-child { margin-top: 0; }
+
+  .modal-body p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.65;
+    margin-bottom: 12px;
+  }
+
+  .modal-body p strong { color: var(--text); }
+
+  .modal-body code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg-0);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    color: var(--blue);
+  }
+
+  .modal-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 12px;
+  }
+
+  .modal-table th, .modal-table td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: middle;
+  }
+
+  .modal-table th {
+    background: var(--bg-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .modal-table td.mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+
+  .modal-table td.center { text-align: center; }
+  .modal-table tr:hover { background: var(--bg-2); }
+
+  .modal-table tr.row-current-load {
+    background: var(--blue-bg);
+    box-shadow: inset 3px 0 0 var(--blue);
+  }
+
+  .source-note {
+    background: var(--bg-2);
+    border-left: 2px solid var(--teal, #65b7d4);
+    padding: 10px 14px;
+    margin: 14px 0;
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    border-radius: 4px;
+  }
+
+  .source-note strong { color: var(--text); }
+
+  /* Tabla de pesos y bonos dentro de los pasos */
+  .weights-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    font-size: 12px;
+  }
+
+  .weights-table th, .weights-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .weights-table th {
+    background: var(--bg-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--text-faint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .weights-table td.center { text-align: center; }
+  .weights-table td.mono { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--text); }
+  .weights-table tr td:nth-child(3) { color: var(--text-dim); font-size: 11px; }
+
+  .weights-table tr.bonus-active {
+    background: var(--amber-bg);
+    box-shadow: inset 3px 0 0 var(--amber);
+  }
+  .weights-table tr.bonus-active td { color: var(--text); }
+  .weights-table tr.bonus-active td:nth-child(3) { color: var(--amber); font-weight: 500; }
+
+  /* Nota de origen físico debajo de las fórmulas */
+  .proc-source-note {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: var(--bg-2);
+    border-left: 2px solid var(--teal, #65b7d4);
+    border-radius: 4px;
+    font-size: 11.5px;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  .proc-source-note strong { color: var(--text); font-weight: 600; }
+
 </style>
 </head>
 <body>
@@ -665,6 +1213,23 @@
       <div>4 variables · 15 condiciones</div>
     </div>
   </header>
+
+  <!-- ============================================== -->
+  <!-- TABS DE NAVEGACIÓN                             -->
+  <!-- ============================================== -->
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-view="main">
+      <span class="tab-num">01</span>Principal
+    </button>
+    <button class="nav-tab" data-view="proc">
+      <span class="tab-num">02</span>Procesamiento
+    </button>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- VISTA PRINCIPAL                                -->
+  <!-- ============================================== -->
+  <div class="view active" id="view-main">
 
   <!-- ============================================== -->
   <!-- 01: ENTRADAS                                   -->
@@ -779,7 +1344,7 @@
         <td class="var-name">Temperatura devanado</td>
         <td class="normal-cell" data-cell="t-0">T_nom ± 3 °C  <span style="color:var(--text-faint)">(±2σ)</span></td>
         <td class="warn-cell"   data-cell="t-1">+3 a +5 °C sobre nominal</td>
-        <td class="fail-cell"   data-cell="t-2">>+5 °C sobre nom. · ≥130 °C · dT/dt >5 °C/min</td>
+        <td class="fail-cell"   data-cell="t-2">>+5 °C sobre nom. <strong style="color:var(--text-faint)">O</strong> ≥130 °C <strong style="color:var(--text-faint)">O</strong> dT/dt >5 °C/min</td>
         <td class="persist-cell">Adv: 10 min · Falla: 5 min</td>
       </tr>
       <tr>
@@ -792,8 +1357,8 @@
       <tr>
         <td class="var-name">Vibración (RMS)</td>
         <td class="normal-cell" data-cell="v-0">0,5–2,5 mm/s</td>
-        <td class="warn-cell"   data-cell="v-1">2,5–3,8 mm/s · σ > 1,5× línea base</td>
-        <td class="fail-cell"   data-cell="v-2">>3,8 mm/s · σ > 3× línea base</td>
+        <td class="warn-cell"   data-cell="v-1">2,5–3,8 mm/s <strong style="color:var(--text-faint)">O</strong> σ > 1,5× línea base</td>
+        <td class="fail-cell"   data-cell="v-2">>3,8 mm/s <strong style="color:var(--text-faint)">O</strong> σ > 3× línea base</td>
         <td class="persist-cell">Adv: 5 min · Falla: 1 min</td>
       </tr>
       <tr>
@@ -995,6 +1560,51 @@
 
   </div>
 
+  </div><!-- /view-main -->
+
+  <!-- ================================================== -->
+  <!-- VISTA PROCESAMIENTO                                -->
+  <!-- ================================================== -->
+  <div class="view" id="view-proc">
+
+    <div class="proc-current-readout" id="proc-readout">
+      <div class="proc-readout-label">Mediciones actuales</div>
+      <div class="proc-readout-values" id="proc-readout-values">
+        <!-- inyectado por JS -->
+      </div>
+      <button class="proc-readout-link" data-view="main">← Ir a Principal para modificar</button>
+    </div>
+
+    <div class="proc-intro">
+      <h3>Cómo avanza el procesamiento, paso a paso</h3>
+      <p>El modelo toma las cuatro mediciones del generador junto con la carga actual y las hace pasar por una secuencia de siete pasos. En cada paso entra <strong>solo lo que necesita</strong> de los pasos anteriores. Hay tres tablas que actúan como referencia: la <strong>tabla nominal por carga</strong> entra en el paso 2, la <strong>tabla de criterios</strong> en el paso 4, y la <strong>tabla de estados globales</strong> en el paso 6.</p>
+      <p>Mueva los controles de la pestaña Principal y vuelva aquí para ver cómo se recalcula todo el flujo en vivo. Los botones <em>"Ver tabla"</em> abren el detalle de cómo se construyó cada referencia.</p>
+    </div>
+
+    <div class="proc-steps" id="proc-steps">
+      <!-- Los 7 pasos se renderizan por JS para mantenerlos sincronizados con el estado -->
+    </div>
+
+  </div><!-- /view-proc -->
+
+</div>
+
+<!-- ================================================== -->
+<!-- MODAL                                              -->
+<!-- ================================================== -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-window">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modal-title">Título</div>
+        <div class="modal-subtitle" id="modal-subtitle">subtítulo</div>
+      </div>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <!-- Contenido inyectado por JS según la tabla seleccionada -->
+    </div>
+  </div>
 </div>
 
 <script>
@@ -1394,6 +2004,12 @@ function update() {
     document.getElementById('score-cat').textContent = matched.state;
     document.getElementById('mode-text').textContent = matched.mode;
   }
+
+  // Si la vista de procesamiento está activa, refrescarla también
+  const procView = document.getElementById('view-proc');
+  if (procView && procView.classList.contains('active')) {
+    renderProcSteps();
+  }
 }
 
 // ===== EVENTOS =====
@@ -1477,6 +2093,629 @@ document.querySelectorAll('.preset-btn').forEach(btn => {
   });
 });
 
+// ============================================================
+// TABLA DE VALORES NOMINALES REALES POR CARGA
+// (Sección 3 del documento original — tabla por carga)
+// ============================================================
+const NOMINAL_TABLE = [
+  { mw:  40, tNom: 45.3, tNorm: "40,3 – 50,3", tAdv: "50,3 – 57,3", tFalla: ">57,3" },
+  { mw:  45, tNom: 46.7, tNorm: "41,7 – 51,7", tAdv: "51,7 – 58,7", tFalla: ">58,7" },
+  { mw:  50, tNom: 48.2, tNorm: "43,2 – 53,2", tAdv: "53,2 – 60,2", tFalla: ">60,2" },
+  { mw:  55, tNom: 49.9, tNorm: "44,9 – 54,9", tAdv: "54,9 – 61,9", tFalla: ">61,9" },
+  { mw:  60, tNom: 51.8, tNorm: "46,8 – 56,8", tAdv: "56,8 – 63,8", tFalla: ">63,8" },
+  { mw:  65, tNom: 53.9, tNorm: "48,9 – 58,9", tAdv: "58,9 – 65,9", tFalla: ">65,9" },
+  { mw:  70, tNom: 56.1, tNorm: "51,1 – 61,1", tAdv: "61,1 – 68,1", tFalla: ">68,1" },
+  { mw:  75, tNom: 58.5, tNorm: "53,5 – 63,5", tAdv: "63,5 – 70,5", tFalla: ">70,5" },
+  { mw:  80, tNom: 61.0, tNorm: "56,0 – 66,0", tAdv: "66,0 – 73,0", tFalla: ">73,0" },
+  { mw:  85, tNom: 63.8, tNorm: "58,8 – 68,8", tAdv: "68,8 – 75,8", tFalla: ">75,8" },
+  { mw:  90, tNom: 66.6, tNorm: "61,6 – 71,6", tAdv: "71,6 – 78,6", tFalla: ">78,6" },
+  { mw:  95, tNom: 69.7, tNorm: "64,7 – 74,7", tAdv: "74,7 – 81,7", tFalla: ">81,7" },
+  { mw: 100, tNom: 72.9, tNorm: "67,9 – 77,9", tAdv: "77,9 – 84,9", tFalla: ">84,9" },
+  { mw: 105, tNom: 76.2, tNorm: "71,2 – 81,2", tAdv: "81,2 – 88,2", tFalla: ">88,2" },
+  { mw: 110, tNom: 79.8, tNorm: "74,8 – 84,8", tAdv: "84,8 – 91,8", tFalla: ">91,8" },
+  { mw: 115, tNom: 83.5, tNorm: "78,5 – 88,5", tAdv: "88,5 – 95,5", tFalla: ">95,5" },
+  { mw: 120, tNom: 87.3, tNorm: "82,3 – 92,3", tAdv: "92,3 – 99,3", tFalla: ">99,3" },
+  { mw: 125, tNom: 91.4, tNorm: "86,4 – 96,4", tAdv: "96,4 – 103,4", tFalla: ">103,4" },
+  { mw: 130, tNom: 95.6, tNorm: "90,6 – 100,6", tAdv: "100,6 – 107,6", tFalla: ">107,6" },
+  { mw: 135, tNom: 99.9, tNorm: "94,9 – 104,9", tAdv: "104,9 – 111,9", tFalla: ">111,9" },
+  { mw: 140, tNom: 104.4, tNorm: "99,4 – 109,4", tAdv: "109,4 – 116,4", tFalla: ">116,4" },
+  { mw: 145, tNom: 109.1, tNorm: "104,1 – 114,1", tAdv: "114,1 – 121,1", tFalla: ">121,1" },
+  { mw: 150, tNom: 114.0, tNorm: "109,0 – 119,0", tAdv: "119,0 – 126,0", tFalla: ">126,0" }
+];
+
+// Encontrar la fila más cercana a la carga actual
+function nearestNominalRow(mw) {
+  let best = NOMINAL_TABLE[0];
+  let bestDist = Math.abs(mw - best.mw);
+  for (const row of NOMINAL_TABLE) {
+    const d = Math.abs(mw - row.mw);
+    if (d < bestDist) { best = row; bestDist = d; }
+  }
+  return best;
+}
+
+// ============================================================
+// TABS DE NAVEGACIÓN
+// ============================================================
+function activateView(target) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const tabBtn = document.querySelector(`.nav-tab[data-view="${target}"]`);
+  if (tabBtn) tabBtn.classList.add('active');
+  document.getElementById('view-' + target).classList.add('active');
+  if (target === 'proc') renderProcSteps();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.querySelectorAll('.nav-tab').forEach(tab => {
+  tab.addEventListener('click', () => activateView(tab.dataset.view));
+});
+
+// El botón del readout ("Ir a Principal") también navega
+document.addEventListener('click', (e) => {
+  if (e.target.classList && e.target.classList.contains('proc-readout-link')) {
+    activateView(e.target.dataset.view);
+  }
+});
+
+// ============================================================
+// RENDER DE LOS 7 PASOS DEL PROCESAMIENTO
+// ============================================================
+function renderProcSteps() {
+  // leer estado actual del modelo
+  const mw = state.mw, t = state.t, hr = state.hr, v = state.v, dp = state.dp;
+  const rT  = classifyT(t, mw);
+  const rHR = classifyHR(hr);
+  const rV  = classifyV(v);
+  const rDP = classifyDP(dp, t);
+  const nearestRow = nearestNominalRow(mw);
+
+  // Score
+  const states = { t: rT.state, hr: rHR.state, v: rV.state, dp: rDP.state };
+  const trips = { t: rT.trip, v: rV.trip };
+  const indiv = 3 * states.dp + 2 * states.t + 2 * states.v + 1 * states.hr;
+  const b1 = (states.dp >= 1 && states.t >= 1) ? 2 : 0;
+  const b2 = (states.dp >= 1 && states.hr >= 1) ? 2 : 0;
+  const b3 = (states.t >= 1 && states.v >= 1) ? 1.5 : 0;
+  const b4 = (states.hr >= 1 && states.t >= 1) ? 1 : 0;
+  const b5 = (states.dp >= 1 && states.t >= 1 && states.hr >= 1) ? 3 : 0;
+  const bonusTotal = b1 + b2 + b3 + b4 + b5;
+  const scoreTotal = indiv + bonusTotal;
+
+  // Buscar la fila ganadora en la tabla de estados
+  let matched = null;
+  for (const row of STATES_TABLE) {
+    if (row.test(states, trips)) { matched = row; break; }
+  }
+  const matchedScore = matched
+    ? (typeof matched.score === 'string' ? scoreTotal.toFixed(1) : matched.score)
+    : 0;
+
+  const stateClassMap = {
+    'Normal': 's-normal',
+    'Observación': 's-warn',
+    'Observación reforzada': 's-warn',
+    'Advertencia': 's-warn',
+    'Advertencia alta': 's-warn',
+    'Falla probable': 's-fail',
+    'Falla probable alta': 's-fail',
+    'Falla inminente': 's-crit',
+    'Disparo recomendado': 's-crit'
+  };
+  const finalCls = matched ? (stateClassMap[matched.state] || 's-normal') : 's-normal';
+
+  const stLabel = (s) => ['NORMAL','ADVERT.','FALLA'][s];
+  const stCls   = (s) => ['ok','warn','fail'][s];
+
+  // Helpers de formato
+  const fmt = (n, dec=1) => n.toFixed(dec);
+  const sign = (n, dec=1) => (n>=0?'+':'') + n.toFixed(dec);
+
+  // -- HTML de los 7 pasos --
+  const html = `
+
+  <!-- PASO 1 -->
+  <div class="proc-step">
+    <div class="proc-step-header">
+      <div class="proc-step-num">1</div>
+      <div class="proc-step-title-block">
+        <div class="step-title">Entrada de mediciones</div>
+        <div class="step-subtitle">Lectura cruda desde DCS y sistema de PD · ningún cálculo todavía</div>
+      </div>
+      <div class="proc-step-action"></div>
+    </div>
+    <div class="proc-step-body single">
+      <div class="proc-block">
+        <div class="proc-block-label">Datos de entrada actuales</div>
+        <div class="proc-data">
+          <span class="data-key">Carga (MW)</span>           <span class="data-val highlight">${mw}</span>
+          <span class="data-key">T° devanado (medida)</span> <span class="data-val">${fmt(t)} °C</span>
+          <span class="data-key">Humedad relativa</span>     <span class="data-val">${hr} %</span>
+          <span class="data-key">Vibración RMS</span>        <span class="data-val">${fmt(v)} mm/s</span>
+          <span class="data-key">Descargas parciales (Qm)</span> <span class="data-val">${dp} mV</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="proc-arrow-down">↓</div>
+
+  <!-- PASO 2 -->
+  <div class="proc-step uses-table">
+    <div class="proc-step-header">
+      <div class="proc-step-num">2</div>
+      <div class="proc-step-title-block">
+        <div class="step-title">Determinar el nominal por carga</div>
+        <div class="step-subtitle">Entra la <strong>tabla de valores nominales</strong> (o la fórmula equivalente)</div>
+      </div>
+      <div class="proc-step-action">
+        <button class="table-link-btn" data-modal="nominal">Ver tabla</button>
+      </div>
+    </div>
+    <div class="proc-step-body">
+      <div class="proc-block">
+        <div class="proc-block-label">Cómo se obtiene</div>
+        <div class="proc-explanation">
+          Con la carga actual de <strong>${mw} MW</strong> se busca el nominal esperado de T° devanado. Para HR, Vibración y DP no hay nominal por carga: se usan bandas operativas (HR, Vib) o el umbral base con corrección térmica (DP).
+        </div>
+        <div class="proc-formula">T_nom(MW) = 40 + 80 × (MW / 156)²</div>
+        <div class="proc-source-note">
+          <strong>De dónde sale:</strong> las pérdidas por efecto Joule (I²R) en el devanado escalan con el cuadrado de la corriente, y a tensión constante I ∝ MW. Anclamos dos puntos físicos: <strong>40 °C</strong> con el generador frío (temperatura ambiente) y <strong>120 °C @ 156 MW</strong> (límite de aislación clase F con elevación clase B). Eso da una curva cuadrática.
+        </div>
+      </div>
+      <div class="proc-block">
+        <div class="proc-block-label">Resultado para esta carga</div>
+        <div class="proc-data">
+          <span class="data-key">Carga actual</span>           <span class="data-val highlight">${mw} MW</span>
+          <span class="data-key">Fila más cercana en tabla</span> <span class="data-val">${nearestRow.mw} MW</span>
+          <span class="data-key">T_nom (fórmula)</span>        <span class="data-val highlight">${fmt(rT.nom)} °C</span>
+          <span class="data-key">T_nom (tabla)</span>          <span class="data-val">${fmt(nearestRow.tNom)} °C</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="proc-arrow-down">↓</div>
+
+  <!-- PASO 3 -->
+  <div class="proc-step">
+    <div class="proc-step-header">
+      <div class="proc-step-num">3</div>
+      <div class="proc-step-title-block">
+        <div class="step-title">Calcular residuos y aplicar correcciones</div>
+        <div class="step-subtitle">Se transforman las mediciones en magnitudes comparables · ningún diagnóstico aún</div>
+      </div>
+      <div class="proc-step-action"></div>
+    </div>
+    <div class="proc-step-body">
+      <div class="proc-block">
+        <div class="proc-block-label">Residuo térmico ΔT</div>
+        <div class="proc-explanation">
+          La temperatura medida por sí sola no dice nada: hay que compararla con lo esperado para la carga.
+        </div>
+        <div class="proc-formula">ΔT = T_med − T_nom = ${fmt(t)} − ${fmt(rT.nom)} = ${sign(rT.residuo)} °C</div>
+        <div class="proc-source-note" style="border-left-color:var(--blue)">
+          <strong>↓ Este ΔT se usa en el paso 4</strong> para clasificar la T° devanado: se compara contra los umbrales ±3 °C (normal) y +5 °C (falla) de la tabla de criterios.
+        </div>
+      </div>
+      <div class="proc-block">
+        <div class="proc-block-label">Corrección térmica de DP</div>
+        <div class="proc-explanation">
+          A mayor temperatura del estator, menor rigidez dieléctrica → el umbral de DP debe bajar.
+        </div>
+        <div class="proc-formula">f(T) = 1 − 0,005 × (${fmt(t)} − 60) = ${rDP.corr.toFixed(3)}<br>Umbral_adv = 239 × f(T) = <strong>${rDP.uAdv.toFixed(0)} mV</strong><br>Umbral_falla = 500 × f(T) = <strong>${rDP.uFall.toFixed(0)} mV</strong></div>
+        <div class="proc-source-note">
+          <strong>De dónde sale:</strong> el aislamiento epoxi-mica del estator pierde rigidez dieléctrica al calentarse — literatura técnica (CIGRE, Iris Power) indica una caída de ≈0,5 % por cada °C sobre 60 °C. El umbral base de 239 mV es el percentil 75 de la base de datos de Iris Power para máquinas 13–15 kV.
+        </div>
+        <div class="proc-source-note" style="border-left-color:var(--blue)">
+          <strong>↓ Estos umbrales corregidos se usan en el paso 4</strong> para clasificar las DP medidas (Qm) contra los umbrales ya ajustados a la temperatura real del estator.
+        </div>
+      </div>
+    </div>
+    <div class="proc-step-body single" style="border-top:1px dashed var(--line);padding-top:14px;margin-top:-4px">
+      <div class="proc-block" style="background:var(--bg-2)">
+        <div class="proc-block-label">¿Y para HR y Vibración?</div>
+        <div class="proc-explanation">
+          Estas dos variables <strong>no necesitan transformación</strong>: la humedad relativa y la velocidad RMS se comparan directamente contra bandas operativas fijas en el paso 4. La medición cruda ya es lo que se evalúa.<br>
+          <span style="color:var(--text-faint);font-size:11px">(Nota: el modelo completo contempla criterios adicionales — margen al punto de rocío para HR, y varianza σ_RMS para vibración — pero estos requieren datos contextuales y/o históricos que no están en este dashboard demostrativo. Las bandas directas son la implementación funcional.)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="proc-arrow-down">↓</div>
+
+  <!-- PASO 4 -->
+  <div class="proc-step uses-table">
+    <div class="proc-step-header">
+      <div class="proc-step-num">4</div>
+      <div class="proc-step-title-block">
+        <div class="step-title">Clasificar cada variable</div>
+        <div class="step-subtitle">Entra la <strong>tabla de criterios</strong> · cada variable recibe un estado s ∈ {0, 1, 2}</div>
+      </div>
+      <div class="proc-step-action">
+        <button class="table-link-btn" data-modal="criteria">Ver tabla</button>
+      </div>
+    </div>
+    <div class="proc-step-body single">
+      <div class="proc-block">
+        <div class="proc-block-label">Qué significa s_X</div>
+        <div class="proc-explanation">
+          Cada variable se compara con la <strong>tabla de criterios</strong> y recibe un número que llamamos <code>s</code> (de "estado"):<br>
+          <strong>s = 0</strong> → la variable está en rango normal · <strong>s = 1</strong> → advertencia · <strong>s = 2</strong> → falla probable.<br>
+          Después estos cuatro números (uno por variable) son los que entran al cálculo del Score.
+        </div>
+      </div>
+
+      <div class="proc-block" style="margin-top:12px">
+        <div class="proc-block-label">Comparación variable por variable (cómo se obtiene cada s_X)</div>
+        <table class="weights-table">
+          <thead>
+            <tr><th>Variable</th><th>Valor que entra</th><th>Comparación contra criterios</th><th class="center">Resultado</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>T°</strong> devanado</td>
+              <td class="mono">ΔT = ${sign(rT.residuo)} °C<br><span style="font-size:10px;color:var(--text-faint)">(viene del paso 3)</span></td>
+              <td class="mono" style="font-size:11px">${
+                rT.residuo > 5 ? '<span class="fail">ΔT > +5 °C</span> → cae en banda <span class="fail">FALLA</span>' :
+                rT.residuo > 3 ? '<span class="warn">+3 < ΔT ≤ +5 °C</span> → cae en banda <span class="warn">ADV.</span>' :
+                Math.abs(rT.residuo) <= 3 ? '<span class="ok">|ΔT| ≤ 3 °C</span> → cae en banda <span class="ok">NORMAL</span>' :
+                '<span class="ok">ΔT &lt; −3 °C</span> → diagnóstico de sensor (NORMAL)'
+              }${state.t >= 130 ? '<br><span class="fail">+ T_med ≥ 130 °C → trip OEM</span>' : ''}</td>
+              <td class="mono center"><span class="data-val ${stCls(states.t)}">s_T = ${states.t}</span></td>
+            </tr>
+            <tr>
+              <td><strong>HR</strong> humedad</td>
+              <td class="mono">HR = ${hr} %<br><span style="font-size:10px;color:var(--text-faint)">(medición directa)</span></td>
+              <td class="mono" style="font-size:11px">${
+                hr > 70 ? '<span class="fail">HR > 70 %</span> → cae en banda <span class="fail">FALLA</span>' :
+                hr >= 60 ? '<span class="warn">60 ≤ HR ≤ 70 %</span> → cae en banda <span class="warn">ADV.</span>' :
+                '<span class="ok">30 ≤ HR ≤ 60 %</span> → cae en banda <span class="ok">NORMAL</span>'
+              }<br><span style="font-size:10px;color:var(--text-faint)">criterio adicional: margen al punto de rocío (no calculado)</span></td>
+              <td class="mono center"><span class="data-val ${stCls(states.hr)}">s_HR = ${states.hr}</span></td>
+            </tr>
+            <tr>
+              <td><strong>V</strong> vibración</td>
+              <td class="mono">RMS = ${fmt(v)} mm/s<br><span style="font-size:10px;color:var(--text-faint)">(medición directa)</span></td>
+              <td class="mono" style="font-size:11px">${
+                v > 7.5 ? '<span class="fail">RMS > 7,5 mm/s</span> → trip absoluto (zona D ISO)' :
+                v > 3.8 ? '<span class="fail">RMS > 3,8 mm/s</span> → cae en banda <span class="fail">FALLA</span>' :
+                v >= 2.5 ? '<span class="warn">2,5 ≤ RMS ≤ 3,8</span> → cae en banda <span class="warn">ADV.</span>' :
+                '<span class="ok">RMS &lt; 2,5 mm/s</span> → cae en banda <span class="ok">NORMAL</span>'
+              }<br><span style="font-size:10px;color:var(--text-faint)">criterio adicional: σ_RMS (no calculado, requiere histórico)</span></td>
+              <td class="mono center"><span class="data-val ${stCls(states.v)}">s_V = ${states.v}</span></td>
+            </tr>
+            <tr>
+              <td><strong>DP</strong> desc. parciales</td>
+              <td class="mono">Qm = ${dp} mV<br><span style="font-size:10px;color:var(--text-faint)">(medición directa)</span></td>
+              <td class="mono" style="font-size:11px">${
+                dp > rDP.uFall ? `<span class="fail">${dp} > ${rDP.uFall.toFixed(0)}</span> (uFalla) → cae en banda <span class="fail">FALLA</span>` :
+                dp > rDP.uAdv ? `<span class="warn">${rDP.uAdv.toFixed(0)} &lt; ${dp} ≤ ${rDP.uFall.toFixed(0)}</span> → cae en banda <span class="warn">ADV.</span>` :
+                `<span class="ok">${dp} ≤ ${rDP.uAdv.toFixed(0)}</span> (uAdv) → cae en banda <span class="ok">NORMAL</span>`
+              }<br><span style="font-size:10px;color:var(--text-faint)">umbrales corregidos vienen del paso 3</span></td>
+              <td class="mono center"><span class="data-val ${stCls(states.dp)}">s_DP = ${states.dp}</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="proc-source-note">
+          <strong>Importante:</strong> el ΔT calculado en el paso 3 entra <strong>aquí</strong> — es el valor que se compara contra ±3 °C / +5 °C para decidir el estado de T°. Lo mismo con los umbrales corregidos de DP: se calcularon en el paso 3 y se usan en este paso para clasificar Qm.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="proc-arrow-down">↓</div>
+
+  <!-- PASO 5 -->
+  <div class="proc-step">
+    <div class="proc-step-header">
+      <div class="proc-step-num">5</div>
+      <div class="proc-step-title-block">
+        <div class="step-title">Calcular el Score</div>
+        <div class="step-subtitle">Dos componentes distintos: <strong>pesos</strong> (severidad de cada variable por separado) + <strong>bonos</strong> (premio cuando dos variables apuntan al mismo modo de falla)</div>
+      </div>
+      <div class="proc-step-action"></div>
+    </div>
+
+    <!-- 5a: Pesos -->
+    <div class="proc-step-body single" style="border-bottom:1px dashed var(--line);">
+      <div class="proc-block">
+        <div class="proc-block-label">Componente A · Pesos por variable (severidad intrínseca)</div>
+        <div class="proc-explanation">
+          Cada variable tiene una <strong>severidad intrínseca distinta</strong>. La DP toca directamente el aislamiento (modo de falla más caro de reparar), por eso pesa 3. T° y vibración son indicadores estructurales, pesan 2. HR es un acelerador secundario, pesa 1.
+        </div>
+        <table class="weights-table">
+          <thead>
+            <tr><th>Variable</th><th>Peso</th><th>Por qué</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>DP</strong> (descargas parciales)</td><td class="mono center">3</td><td>Indicador directo del estado del aislamiento — el componente más caro y crítico</td></tr>
+            <tr><td><strong>T°</strong> (temperatura devanado)</td><td class="mono center">2</td><td>Indicador estructural · acelera el envejecimiento del aislamiento</td></tr>
+            <tr><td><strong>V</strong> (vibración)</td><td class="mono center">2</td><td>Indicador estructural · riesgo de daño mecánico al rotor o cojinetes</td></tr>
+            <tr><td><strong>HR</strong> (humedad)</td><td class="mono center">1</td><td>Indicador secundario · solo es relevante combinado con otras variables</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 5b: Aplicar pesos al caso actual -->
+    <div class="proc-step-body single" style="border-bottom:1px dashed var(--line);">
+      <div class="proc-block">
+        <div class="proc-block-label">Aplicar los pesos al caso actual</div>
+        <div class="proc-formula">Score_pesos = peso_DP · s_DP + peso_T · s_T + peso_V · s_V + peso_HR · s_HR<br>= 3·${states.dp} + 2·${states.t} + 2·${states.v} + 1·${states.hr}<br>= <strong>${indiv}</strong></div>
+      </div>
+    </div>
+
+    <!-- 5c: Bonos -->
+    <div class="proc-step-body single" style="border-bottom:1px dashed var(--line);">
+      <div class="proc-block">
+        <div class="proc-block-label">Componente B · Bonos por correlación (cuando dos variables apuntan al mismo modo de falla)</div>
+        <div class="proc-explanation">
+          <strong>Los bonos son distintos de los pesos.</strong> Los pesos miden cada variable <em>por separado</em>. Los bonos se activan cuando <strong>dos variables se ponen en advertencia o falla a la vez Y ambas apuntan al mismo modo de falla</strong>. Cuando eso ocurre, el riesgo real es <em>mayor</em> que la suma de las partes — por eso se suma un premio extra.<br><br>
+          Ejemplo: si solo DP está en advertencia, suma 3 (peso). Si solo T° está en advertencia, suma 2. Pero si <strong>ambas a la vez</strong>, suma 3 + 2 + bono(+2) = 7, porque la combinación apunta a "envejecimiento térmico del aislamiento", que es más grave que las dos por separado.
+        </div>
+        <table class="weights-table">
+          <thead>
+            <tr><th>Combinación activa</th><th>Bono</th><th>Modo de falla apuntado</th></tr>
+          </thead>
+          <tbody>
+            <tr class="${b1>0?'bonus-active':''}"><td><strong>DP + T°</strong> ambas ≥ 1</td><td class="mono center">+2</td><td>Envejecimiento térmico del aislamiento</td></tr>
+            <tr class="${b2>0?'bonus-active':''}"><td><strong>DP + HR</strong> ambas ≥ 1</td><td class="mono center">+2</td><td>Degradación dieléctrica por humedad</td></tr>
+            <tr class="${b3>0?'bonus-active':''}"><td><strong>T° + V</strong> ambas ≥ 1</td><td class="mono center">+1,5</td><td>Falla mecánica con disipación térmica anormal</td></tr>
+            <tr class="${b4>0?'bonus-active':''}"><td><strong>HR + T°</strong> ambas ≥ 1</td><td class="mono center">+1</td><td>Riesgo de condensación por gradiente térmico</td></tr>
+            <tr class="${b5>0?'bonus-active':''}"><td><strong>DP + T° + HR</strong> las tres ≥ 1</td><td class="mono center">+3</td><td>Falla dieléctrica multifactorial (la más grave)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 5d: Bonos activos en el caso actual -->
+    <div class="proc-step-body single" style="border-bottom:1px dashed var(--line);">
+      <div class="proc-block">
+        <div class="proc-block-label">Bonos activos con las mediciones actuales</div>
+        <div class="proc-data">
+          <span class="data-key">DP + T°</span>          <span class="data-val ${b1>0?'warn':''}">${b1>0?'+ '+b1+' (activo)':'— (no aplica)'}</span>
+          <span class="data-key">DP + HR</span>          <span class="data-val ${b2>0?'warn':''}">${b2>0?'+ '+b2+' (activo)':'— (no aplica)'}</span>
+          <span class="data-key">T° + V</span>           <span class="data-val ${b3>0?'warn':''}">${b3>0?'+ '+b3+' (activo)':'— (no aplica)'}</span>
+          <span class="data-key">HR + T°</span>          <span class="data-val ${b4>0?'warn':''}">${b4>0?'+ '+b4+' (activo)':'— (no aplica)'}</span>
+          <span class="data-key">DP + T° + HR</span>     <span class="data-val ${b5>0?'warn':''}">${b5>0?'+ '+b5+' (activo)':'— (no aplica)'}</span>
+          <span class="data-key" style="border-top:1px solid var(--line-soft);padding-top:6px;margin-top:4px"><strong>Σ bonos</strong></span>
+          <span class="data-val warn" style="border-top:1px solid var(--line-soft);padding-top:6px;margin-top:4px"><strong>${bonusTotal}</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5e: Total final -->
+    <div class="proc-step-body single">
+      <div class="proc-block" style="background:var(--bg-2);border-color:var(--blue)">
+        <div class="proc-block-label">Score total</div>
+        <div class="proc-formula" style="font-size:14px">Score = (componente A) + (componente B)<br>Score = pesos + bonos = ${indiv} + ${bonusTotal} = <strong style="color:#fff;font-size:22px">${scoreTotal.toFixed(1)}</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="proc-arrow-down">↓</div>
+
+  <!-- PASO 6 -->
+  <div class="proc-step uses-table">
+    <div class="proc-step-header">
+      <div class="proc-step-num">6</div>
+      <div class="proc-step-title-block">
+        <div class="step-title">Buscar la condición global</div>
+        <div class="step-subtitle">Entra la <strong>tabla de estados</strong> · gana la primera fila cuya condición se cumpla</div>
+      </div>
+      <div class="proc-step-action">
+        <button class="table-link-btn" data-modal="states">Ver tabla</button>
+      </div>
+    </div>
+    <div class="proc-step-body single">
+      <div class="proc-block">
+        <div class="proc-block-label">Fila que matchea</div>
+        <div class="proc-explanation">
+          Con los estados <code>s_T=${states.t}, s_HR=${states.hr}, s_V=${states.v}, s_DP=${states.dp}</code> el sistema recorre la tabla de arriba hacia abajo y se queda con la <strong>primera fila</strong> que cumple la condición.
+        </div>
+        <div style="background:var(--bg-2);border:1px solid var(--blue);border-radius:6px;padding:12px;margin-top:10px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px">Condición ganadora</div>
+          <div style="color:var(--text);font-size:13px;font-weight:600">${matched ? matched.cond : '—'}</div>
+          <div style="color:var(--text-dim);font-size:11px;margin-top:4px">Score esperado: <strong style="color:var(--blue)">${matched ? matched.score : '—'}</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="proc-arrow-down">↓</div>
+
+  <!-- PASO 7 -->
+  <div class="proc-step">
+    <div class="proc-step-header">
+      <div class="proc-step-num">7</div>
+      <div class="proc-step-title-block">
+        <div class="step-title">Decisión final</div>
+        <div class="step-subtitle">Estado global del generador y modo de falla apuntado</div>
+      </div>
+      <div class="proc-step-action"></div>
+    </div>
+    <div class="proc-step-body single">
+      <div class="proc-final ${finalCls}">
+        <div class="proc-final-label">Score ${matchedScore} · Estado global</div>
+        <div class="proc-final-state">${matched ? matched.state : '—'}</div>
+        <div class="proc-final-mode">Modo de falla apuntado: ${matched ? matched.mode : '—'}</div>
+      </div>
+    </div>
+  </div>
+
+  `;
+
+  document.getElementById('proc-steps').innerHTML = html;
+
+  // Bind de los botones "Ver tabla"
+  document.querySelectorAll('.table-link-btn').forEach(b => {
+    b.addEventListener('click', () => openModal(b.dataset.modal));
+  });
+
+  // Render del readout sticky superior
+  const readoutHtml = `
+    <div class="readout-pill"><span class="rp-key">MW</span><span class="rp-val">${mw}</span></div>
+    <div class="readout-pill s-${rT.state}"><span class="rp-key">T°</span><span class="rp-val">${fmt(t)} °C</span></div>
+    <div class="readout-pill s-${rHR.state}"><span class="rp-key">HR</span><span class="rp-val">${hr} %</span></div>
+    <div class="readout-pill s-${rV.state}"><span class="rp-key">Vib</span><span class="rp-val">${fmt(v)} mm/s</span></div>
+    <div class="readout-pill s-${rDP.state}"><span class="rp-key">DP</span><span class="rp-val">${dp} mV</span></div>
+  `;
+  document.getElementById('proc-readout-values').innerHTML = readoutHtml;
+}
+
+// ============================================================
+// MODALES (3 tipos: nominal, criteria, states)
+// ============================================================
+function openModal(kind) {
+  const overlay  = document.getElementById('modal-overlay');
+  const titleEl  = document.getElementById('modal-title');
+  const subEl    = document.getElementById('modal-subtitle');
+  const bodyEl   = document.getElementById('modal-body');
+
+  const mw = state.mw;
+
+  if (kind === 'nominal') {
+    titleEl.textContent = 'Tabla de valores nominales por carga';
+    subEl.textContent = 'Cómo se construyó · 23 puntos de carga, de 40 a 150 MW';
+    let rows = NOMINAL_TABLE.map(r => {
+      const isCurrent = Math.abs(r.mw - mw) === Math.abs(nearestNominalRow(mw).mw - mw) && r.mw === nearestNominalRow(mw).mw;
+      return `<tr class="${isCurrent ? 'row-current-load' : ''}">
+        <td class="mono center">${r.mw}</td>
+        <td class="mono center">${r.tNom.toFixed(1)}</td>
+        <td class="mono center" style="color:var(--green)">${r.tNorm}</td>
+        <td class="mono center" style="color:var(--amber)">${r.tAdv}</td>
+        <td class="mono center" style="color:var(--red)">${r.tFalla}</td>
+      </tr>`;
+    }).join('');
+    bodyEl.innerHTML = `
+      <h4>Cómo se construyó esta tabla</h4>
+      <p>La tabla nace de la <strong>física del calentamiento del devanado</strong>: las pérdidas por efecto Joule (I²R) escalan con el cuadrado de la corriente, y a tensión constante la corriente es proporcional a la potencia activa. Por eso el incremento de temperatura sobre el ambiente debe seguir una curva cuadrática con la carga.</p>
+      <p>Anclando dos puntos físicos — <strong>40 °C ambiente sin carga</strong> y <strong>120 °C a plena carga (156 MW)</strong>, que es el límite operativo de una clase F con elevación clase B — se obtiene la fórmula:</p>
+      <p><code>T_nom(MW) = 40 + 80 × (MW / 156)²</code></p>
+      <p>La tabla evalúa esa fórmula cada 5 MW desde 40 hasta 150 MW, generando 23 filas. Para cada fila se calcula además la banda normal (T_nom ± 5 °C), advertencia (+5 a +12 °C) y falla (>+12 °C), siguiendo el criterio del documento original. La fila resaltada en azul es la más cercana a la carga actual del generador.</p>
+      <div class="source-note"><strong>Nota técnica:</strong> el modelo mejorado usa una banda más estrecha (±3 °C ≈ ±2σ estadístico) en lugar de los ±5 °C de la tabla original, porque captura mejor la realidad de los residuos en operación sana. Pero los valores de T_nom no cambian — solo se ajusta la tolerancia alrededor.</div>
+      <h4>Tabla completa (las 23 filas)</h4>
+      <table class="modal-table">
+        <thead>
+          <tr>
+            <th class="center">Carga (MW)</th>
+            <th class="center">T_nom (°C)</th>
+            <th class="center">Normal</th>
+            <th class="center">Advertencia</th>
+            <th class="center">Falla</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+
+  } else if (kind === 'criteria') {
+    titleEl.textContent = 'Tabla de criterios por variable';
+    subEl.textContent = 'Cómo se construyó · 4 variables × 3 niveles + persistencia';
+    bodyEl.innerHTML = `
+      <h4>Cómo se construyó esta tabla</h4>
+      <p>Cada variable se clasifica en uno de tres estados: <strong>normal (0)</strong>, <strong>advertencia (1)</strong> o <strong>falla probable (2)</strong>. Los umbrales no son arbitrarios: cada uno tiene una fuente técnica trazable.</p>
+
+      <h4>Temperatura del devanado</h4>
+      <p>La banda normal se define como <code>T_nom ± 3 °C</code>, que corresponde a <strong>±2σ</strong> estadístico cuando σ ≈ 1,5 °C (típico para RTDs de ranura bien instalados). La frontera de falla es <code>>+5 °C sobre el nominal</code> (≈ +3σ), o el límite OEM duro de <code>≥130 °C</code>, o una rampa <code>dT/dt > 5 °C/min</code> que indica pérdida abrupta de enfriamiento.</p>
+
+      <h4>Humedad relativa</h4>
+      <p>Bandas directas: <strong>30–60 % normal</strong>, <strong>60–70 % advertencia</strong>, <strong>>70 % falla</strong>. Estos rangos se basan en la práctica de mantenimiento de generadores de gran porte donde por encima de 70 % HR se incrementa significativamente el riesgo de condensación sobre el aislamiento.</p>
+
+      <h4>Vibración (RMS)</h4>
+      <p>Bandas directas según <strong>ISO 20816-2</strong> para máquinas grandes acopladas a turbina (>15 MW): zona A/B hasta 2,5 mm/s, zona C 2,5–3,8 mm/s, zona D >3,8 mm/s. Se añade un criterio complementario de <strong>varianza σ_RMS</strong>: si la dispersión histórica se duplica o triplica sin que el promedio cambie, hay soltura mecánica naciente que el criterio de nivel solo no captura.</p>
+
+      <h4>Descargas parciales</h4>
+      <p>Umbral base de <strong>239 mV</strong> tomado del percentil 75 de la base de datos de Iris Power para máquinas 13–15 kV aire-enfriadas (≈10.000 unidades). El umbral de falla en <strong>500 mV</strong> corresponde al percentil 90 de la misma base. Ambos umbrales se modulan por temperatura del estator (función f(T)) porque la rigidez dieléctrica del aislamiento epoxi-mica decae con el calor.</p>
+
+      <h4>Persistencia</h4>
+      <p>Cada criterio requiere que la condición se mantenga por un tiempo mínimo (10 min para advertencia de T°, 5 min para falla, etc.). Esto evita que transitorios cortos disparen falsas alarmas. La excepción son las <strong>reglas absolutas</strong> (T° ≥130 °C, vibración >7,5 mm/s, dT/dt >5 °C/min) que disparan instantáneamente.</p>
+
+      <table class="modal-table">
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Normal</th>
+            <th>Advertencia</th>
+            <th>Falla</th>
+            <th>Persist.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>T° devanado</strong></td>
+              <td class="mono" style="color:var(--green)">T_nom ± 3 °C</td>
+              <td class="mono" style="color:var(--amber)">+3 a +5 °C sobre nom.</td>
+              <td class="mono" style="color:var(--red)">>+5 °C  O  ≥130 °C  O  dT/dt</td>
+              <td class="mono">10 / 5 min</td></tr>
+          <tr><td><strong>Humedad rel.</strong></td>
+              <td class="mono" style="color:var(--green)">30–60 %</td>
+              <td class="mono" style="color:var(--amber)">60–70 %</td>
+              <td class="mono" style="color:var(--red)">>70 %</td>
+              <td class="mono">30 / 15 min</td></tr>
+          <tr><td><strong>Vibración</strong></td>
+              <td class="mono" style="color:var(--green)">&lt;2,5 mm/s</td>
+              <td class="mono" style="color:var(--amber)">2,5–3,8  O  σ&gt;1,5×</td>
+              <td class="mono" style="color:var(--red)">&gt;3,8  O  σ&gt;3×</td>
+              <td class="mono">5 / 1 min</td></tr>
+          <tr><td><strong>DP (Qm)</strong></td>
+              <td class="mono" style="color:var(--green)">≤239·f(T) mV</td>
+              <td class="mono" style="color:var(--amber)">239 a 500 · f(T)</td>
+              <td class="mono" style="color:var(--red)">>500·f(T) mV</td>
+              <td class="mono">1 / 2 h</td></tr>
+        </tbody>
+      </table>
+    `;
+
+  } else if (kind === 'states') {
+    titleEl.textContent = 'Tabla de estados globales';
+    subEl.textContent = 'Cómo se construyó · 15 condiciones por orden de prioridad';
+    let stRows = STATES_TABLE.map((row, idx) => `
+      <tr>
+        <td class="mono center">${idx+1}</td>
+        <td>${row.cond}</td>
+        <td class="mono center">${row.score}</td>
+        <td><strong>${row.state}</strong></td>
+        <td style="color:var(--text-dim)">${row.mode}</td>
+      </tr>
+    `).join('');
+    bodyEl.innerHTML = `
+      <h4>Cómo se construyó esta tabla</h4>
+      <p>La tabla original del documento clasificaba con un conteo plano de variables ("una en advertencia → Observación; dos → Advertencia"). El problema es que <strong>no todas las combinaciones son iguales</strong>: DP + T° en advertencia (envejecimiento dieléctrico) es mucho más grave que HR + T° en advertencia (condensación recuperable), aunque ambas sean "dos en advertencia".</p>
+      <p>La tabla mejorada lista <strong>15 condiciones específicas</strong>, cada una con su propio score y modo de falla nombrado. Están <strong>ordenadas por prioridad</strong>: las dos primeras son disparos absolutos (T° ≥130 °C y Vib >7,5 mm/s); luego van las combinaciones más severas; al final las observaciones aisladas.</p>
+      <h4>Cómo se le asignó score a cada fila</h4>
+      <p>El score nace de aplicar la fórmula <code>3·s_DP + 2·s_T + 2·s_V + 1·s_HR + bonos</code> a la combinación específica. Por ejemplo:</p>
+      <p>· <strong>DP + T° en advertencia</strong>: 3·1 + 2·1 + bono DP+T° (+2) = <strong>7</strong><br>· <strong>DP + T° + HR los tres en adv.</strong>: 3·1 + 2·1 + 1·1 + bonos (+2 +2 +1) + bono triple (+3) = <strong>11</strong></p>
+      <p>Los pesos <strong>3 / 2 / 2 / 1</strong> reflejan la criticidad relativa: la DP toca directamente el aislamiento (modo de falla más caro), T° y vibración son indicadores estructurales, HR es un acelerador secundario que solo cuenta cuando se combina.</p>
+      <h4>Las 15 filas en orden de prioridad de evaluación</h4>
+      <table class="modal-table">
+        <thead>
+          <tr><th class="center">#</th><th>Condición</th><th class="center">Score</th><th>Estado</th><th>Modo apuntado</th></tr>
+        </thead>
+        <tbody>${stRows}</tbody>
+      </table>
+      <div class="source-note"><strong>Mecánica de evaluación:</strong> el sistema recorre la tabla de la fila 1 a la 15 y se queda con <strong>la primera</strong> que cumpla su condición. No hay empates ni promedios — la prioridad la define el orden.</div>
+    `;
+  }
+
+  overlay.classList.add('active');
+}
+
+document.getElementById('modal-close').addEventListener('click', () => {
+  document.getElementById('modal-overlay').classList.remove('active');
+});
+
+document.getElementById('modal-overlay').addEventListener('click', (e) => {
+  if (e.target.id === 'modal-overlay') {
+    e.currentTarget.classList.remove('active');
+  }
+});
+
+// Cerrar modal con tecla Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.getElementById('modal-overlay').classList.remove('active');
+  }
+});
+
+// ============================================================
+// INICIALIZACIÓN
+// ============================================================
 renderStatesTable();
 update();
 </script>
