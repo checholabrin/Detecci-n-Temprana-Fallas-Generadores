@@ -2861,31 +2861,47 @@ document.querySelectorAll('.preset-btn').forEach(btn => {
 // TABLA DE VALORES NOMINALES REALES POR CARGA
 // (Sección 3 del documento original — tabla por carga)
 // ============================================================
+// ============================================================
+// TABLA DE VALORES NOMINALES POR CARGA — Doc CTM3 original
+// (Tabla 1 del documento "Parámetros nominales de referencia")
+// 10 columnas: MW, %Pn, T° nom min/prom/max, T° alarmas, HR nom/alarmas,
+// Vib nom/alarmas, DP nom/alarmas
+// ============================================================
 const NOMINAL_TABLE = [
-  { mw:  40, tNom: 45.3, tNorm: "40,3 – 50,3", tAdv: "50,3 – 57,3", tFalla: ">57,3" },
-  { mw:  45, tNom: 46.7, tNorm: "41,7 – 51,7", tAdv: "51,7 – 58,7", tFalla: ">58,7" },
-  { mw:  50, tNom: 48.2, tNorm: "43,2 – 53,2", tAdv: "53,2 – 60,2", tFalla: ">60,2" },
-  { mw:  55, tNom: 49.9, tNorm: "44,9 – 54,9", tAdv: "54,9 – 61,9", tFalla: ">61,9" },
-  { mw:  60, tNom: 51.8, tNorm: "46,8 – 56,8", tAdv: "56,8 – 63,8", tFalla: ">63,8" },
-  { mw:  65, tNom: 53.9, tNorm: "48,9 – 58,9", tAdv: "58,9 – 65,9", tFalla: ">65,9" },
-  { mw:  70, tNom: 56.1, tNorm: "51,1 – 61,1", tAdv: "61,1 – 68,1", tFalla: ">68,1" },
-  { mw:  75, tNom: 58.5, tNorm: "53,5 – 63,5", tAdv: "63,5 – 70,5", tFalla: ">70,5" },
-  { mw:  80, tNom: 61.0, tNorm: "56,0 – 66,0", tAdv: "66,0 – 73,0", tFalla: ">73,0" },
-  { mw:  85, tNom: 63.8, tNorm: "58,8 – 68,8", tAdv: "68,8 – 75,8", tFalla: ">75,8" },
-  { mw:  90, tNom: 66.6, tNorm: "61,6 – 71,6", tAdv: "71,6 – 78,6", tFalla: ">78,6" },
-  { mw:  95, tNom: 69.7, tNorm: "64,7 – 74,7", tAdv: "74,7 – 81,7", tFalla: ">81,7" },
-  { mw: 100, tNom: 72.9, tNorm: "67,9 – 77,9", tAdv: "77,9 – 84,9", tFalla: ">84,9" },
-  { mw: 105, tNom: 76.2, tNorm: "71,2 – 81,2", tAdv: "81,2 – 88,2", tFalla: ">88,2" },
-  { mw: 110, tNom: 79.8, tNorm: "74,8 – 84,8", tAdv: "84,8 – 91,8", tFalla: ">91,8" },
-  { mw: 115, tNom: 83.5, tNorm: "78,5 – 88,5", tAdv: "88,5 – 95,5", tFalla: ">95,5" },
-  { mw: 120, tNom: 87.3, tNorm: "82,3 – 92,3", tAdv: "92,3 – 99,3", tFalla: ">99,3" },
-  { mw: 125, tNom: 91.4, tNorm: "86,4 – 96,4", tAdv: "96,4 – 103,4", tFalla: ">103,4" },
-  { mw: 130, tNom: 95.6, tNorm: "90,6 – 100,6", tAdv: "100,6 – 107,6", tFalla: ">107,6" },
-  { mw: 135, tNom: 99.9, tNorm: "94,9 – 104,9", tAdv: "104,9 – 111,9", tFalla: ">111,9" },
-  { mw: 140, tNom: 104.4, tNorm: "99,4 – 109,4", tAdv: "109,4 – 116,4", tFalla: ">116,4" },
-  { mw: 145, tNom: 109.1, tNorm: "104,1 – 114,1", tAdv: "114,1 – 121,1", tFalla: ">121,1" },
-  { mw: 150, tNom: 114.0, tNorm: "109,0 – 119,0", tAdv: "119,0 – 126,0", tFalla: ">126,0" }
+  { mw:  40, pPn: 25.6, tMin: 40.3, tNom: 45.3, tMax: 50.3 },
+  { mw:  45, pPn: 28.8, tMin: 41.7, tNom: 46.7, tMax: 51.7 },
+  { mw:  50, pPn: 32.1, tMin: 43.2, tNom: 48.2, tMax: 53.2 },
+  { mw:  55, pPn: 35.3, tMin: 44.9, tNom: 49.9, tMax: 54.9 },
+  { mw:  60, pPn: 38.5, tMin: 46.8, tNom: 51.8, tMax: 56.8 },
+  { mw:  65, pPn: 41.7, tMin: 48.9, tNom: 53.9, tMax: 58.9 },
+  { mw:  70, pPn: 44.9, tMin: 51.1, tNom: 56.1, tMax: 61.1 },
+  { mw:  75, pPn: 48.1, tMin: 53.5, tNom: 58.5, tMax: 63.5 },
+  { mw:  80, pPn: 51.3, tMin: 56.0, tNom: 61.0, tMax: 66.0 },
+  { mw:  85, pPn: 54.5, tMin: 58.8, tNom: 63.8, tMax: 68.8 },
+  { mw:  90, pPn: 57.7, tMin: 61.6, tNom: 66.6, tMax: 71.6 },
+  { mw:  95, pPn: 60.9, tMin: 64.7, tNom: 69.7, tMax: 74.7 },
+  { mw: 100, pPn: 64.1, tMin: 67.9, tNom: 72.9, tMax: 77.9 },
+  { mw: 105, pPn: 67.3, tMin: 71.2, tNom: 76.2, tMax: 81.2 },
+  { mw: 110, pPn: 70.5, tMin: 74.8, tNom: 79.8, tMax: 84.8 },
+  { mw: 115, pPn: 73.7, tMin: 78.5, tNom: 83.5, tMax: 88.5 },
+  { mw: 120, pPn: 76.9, tMin: 82.3, tNom: 87.3, tMax: 92.3 },
+  { mw: 125, pPn: 80.1, tMin: 86.4, tNom: 91.4, tMax: 96.4 },
+  { mw: 130, pPn: 83.3, tMin: 90.6, tNom: 95.6, tMax: 100.6 },
+  { mw: 135, pPn: 86.5, tMin: 94.9, tNom: 99.9, tMax: 104.9 },
+  { mw: 140, pPn: 89.7, tMin: 99.4, tNom: 104.4, tMax: 109.4 },
+  { mw: 145, pPn: 92.9, tMin: 104.1, tNom: 109.1, tMax: 114.1 },
+  { mw: 150, pPn: 96.2, tMin: 109.0, tNom: 114.0, tMax: 119.0 }
 ];
+
+// T° alarmas absolutas (constantes en todo el rango de cargas):
+//   B2/B1/A1/A2 → — / — / 130 / 145 °C
+// Las otras 3 variables (HR, Vib, DP) son CONSTANTES en todas las filas:
+const NOMINAL_CONSTANTS = {
+  t:  { alarmA1: 130, alarmA2: 145 },
+  hr: { nomMin: 30, nomProm: 45, nomMax: 60, alarmA1: 70, alarmA2: 75 },
+  v:  { nomMin: 0.5, nomProm: 1.5, nomMax: 2.5, alarmA1: 3.8, alarmA2: 7.5 },
+  dp: { nomMin: 0,   nomProm: 119.5, nomMax: 239, alarmA1: 250, alarmA2: 500 }
+};
 
 // Encontrar la fila más cercana a la carga actual
 function nearestNominalRow(mw) {
@@ -3637,40 +3653,81 @@ function openModal(kind) {
   const mw = state.mw;
 
   if (kind === 'nominal') {
-    titleEl.textContent = 'Tabla de valores nominales por carga';
-    subEl.textContent = 'Cómo se construyó · 23 puntos de carga, de 40 a 150 MW';
+    titleEl.textContent = 'Tabla de valores nominales por carga (doc CTM3)';
+    subEl.textContent = 'Las 4 variables · 23 puntos de carga, de 40 a 150 MW';
+
+    const NC = NOMINAL_CONSTANTS;
+    const currentRow = nearestNominalRow(mw);
+
     let rows = NOMINAL_TABLE.map(r => {
-      const isCurrent = Math.abs(r.mw - mw) === Math.abs(nearestNominalRow(mw).mw - mw) && r.mw === nearestNominalRow(mw).mw;
+      const isCurrent = r.mw === currentRow.mw;
       return `<tr class="${isCurrent ? 'row-current-load' : ''}">
         <td class="mono center">${r.mw}</td>
-        <td class="mono center">${r.tNom.toFixed(1)}</td>
-        <td class="mono center" style="color:var(--green)">${r.tNorm}</td>
-        <td class="mono center" style="color:var(--amber)">${r.tAdv}</td>
-        <td class="mono center" style="color:var(--red)">${r.tFalla}</td>
+        <td class="mono center">${r.pPn.toFixed(1)}</td>
+        <td class="mono center" style="color:var(--green)">${r.tMin.toFixed(1)} / <strong>${r.tNom.toFixed(1)}</strong> / ${r.tMax.toFixed(1)}</td>
+        <td class="mono center" style="color:var(--red)">— / — / ${NC.t.alarmA1} / ${NC.t.alarmA2}</td>
       </tr>`;
     }).join('');
+
     bodyEl.innerHTML = `
       <h4>Cómo se construyó esta tabla</h4>
-      <p>La tabla nace de la <strong>física del calentamiento del devanado</strong>: las pérdidas por efecto Joule (I²R) escalan con el cuadrado de la corriente, y a tensión constante la corriente es proporcional a la potencia activa. Por eso el incremento de temperatura sobre el ambiente debe seguir una curva cuadrática con la carga.</p>
-      <p>Anclando dos puntos físicos — <strong>40 °C ambiente sin carga</strong> y <strong>120 °C a plena carga (156 MW)</strong>, que es el límite operativo de una clase F con elevación clase B — se obtiene la fórmula:</p>
+      <p>La tabla del documento original tiene 10 columnas con las 4 variables monitoreadas. <strong>Solo la temperatura del devanado varía con la carga</strong> — las otras tres (HR, vibración, DP) usan bandas operativas fijas que no dependen de MW. Por eso la tabla principal abajo muestra T° por carga; las otras tres se resumen aparte.</p>
+
+      <p>La temperatura nominal sigue una curva cuadrática derivada de la <strong>física del calentamiento del devanado</strong>: las pérdidas por efecto Joule (I²R) escalan con el cuadrado de la corriente, y a tensión constante I ∝ MW. Anclando dos puntos físicos — <strong>40 °C ambiente sin carga</strong> y <strong>120 °C @ 156 MW</strong> (límite clase F + B) — se obtiene:</p>
+
       <p><code>T_nom(MW) = 40 + 80 × (MW / 156)²</code></p>
-      <p>La tabla evalúa esa fórmula cada 5 MW desde 40 hasta 150 MW, generando 23 filas. Para cada fila se calcula además la banda normal (T_nom ± 5 °C), advertencia (+5 a +12 °C) y falla (>+12 °C), siguiendo el criterio del documento original. La fila resaltada en azul es la más cercana a la carga actual del generador.</p>
-      <div class="source-note"><strong>Nota técnica:</strong> el modelo mejorado usa una banda más estrecha (±3 °C ≈ ±2σ estadístico) en lugar de los ±5 °C de la tabla original, porque captura mejor la realidad de los residuos en operación sana. Pero los valores de T_nom no cambian — solo se ajusta la tolerancia alrededor.</div>
-      <h4>Tabla completa (las 23 filas)</h4>
+
+      <p>La banda <strong>min/prom/max</strong> es ±5 °C alrededor del nominal (tolerancia operativa del documento original). Las alarmas A1/A2 a <strong>130/145 °C</strong> son límites OEM absolutos (clase F).</p>
+
+      <h4>Tabla principal · T° devanado por carga (23 filas)</h4>
       <table class="modal-table">
         <thead>
           <tr>
-            <th class="center">Carga (MW)</th>
-            <th class="center">T_nom (°C)</th>
-            <th class="center">Normal</th>
-            <th class="center">Advertencia</th>
-            <th class="center">Falla</th>
+            <th class="center">MW</th>
+            <th class="center">% Pn</th>
+            <th class="center">T° nom (min / <strong>prom</strong> / max °C)</th>
+            <th class="center">T° alarmas (B2 / B1 / A1 / A2 °C)</th>
           </tr>
         </thead>
         <tbody>${rows}</tbody>
       </table>
-    `;
 
+      <h4>Las otras 3 variables · constantes en todo el rango de cargas</h4>
+      <p>Estas tres variables <strong>no dependen de la carga</strong>. Se monitorean contra bandas operativas fijas según norma o práctica de la industria. Por eso aparecen iguales en todas las 23 filas del documento original.</p>
+
+      <table class="modal-table">
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th class="center">Nominal (min / prom / max)</th>
+            <th class="center">Alarmas (B2 / B1 / A1 / A2)</th>
+            <th>Origen del criterio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>HR</strong> (humedad relativa)</td>
+            <td class="mono center" style="color:var(--green)">${NC.hr.nomMin} / <strong>${NC.hr.nomProm}</strong> / ${NC.hr.nomMax} %</td>
+            <td class="mono center" style="color:var(--red)">— / — / ${NC.hr.alarmA1} / ${NC.hr.alarmA2} %</td>
+            <td style="font-size:11px;color:var(--text-dim)">Práctica de mantenimiento generadores grandes; >70 % aumenta riesgo de condensación</td>
+          </tr>
+          <tr>
+            <td><strong>Vibración</strong> (RMS)</td>
+            <td class="mono center" style="color:var(--green)">${NC.v.nomMin} / <strong>${NC.v.nomProm}</strong> / ${NC.v.nomMax} mm/s</td>
+            <td class="mono center" style="color:var(--red)">— / — / ${NC.v.alarmA1} / ${NC.v.alarmA2} mm/s</td>
+            <td style="font-size:11px;color:var(--text-dim)">Norma ISO 20816-2 zonas A/B/C/D para máquinas >15 MW acopladas a turbina</td>
+          </tr>
+          <tr>
+            <td><strong>DP</strong> (Qm)</td>
+            <td class="mono center" style="color:var(--green)">${NC.dp.nomMin} / <strong>${NC.dp.nomProm}</strong> / ${NC.dp.nomMax} mV</td>
+            <td class="mono center" style="color:var(--red)">— / — / ${NC.dp.alarmA1} / ${NC.dp.alarmA2} mV</td>
+            <td style="font-size:11px;color:var(--text-dim)">Percentiles de Iris Power para máquinas 13–15 kV (P75=239, P90=500)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="source-note"><strong>Nota técnica:</strong> el modelo predictivo mejorado usa una banda más estrecha para T° (±3 °C ≈ ±2σ estadístico) en lugar de los ±5 °C del documento original, porque captura mejor los residuos en operación sana. Para DP, el modelo agrega una corrección térmica f(T) que ajusta los umbrales según la T° del estator. Pero los <strong>valores base de la tabla no cambian</strong>.</div>
+    `;
   } else if (kind === 'criteria') {
     titleEl.textContent = 'Tabla de criterios por variable';
     subEl.textContent = 'Cómo se construyó · 4 variables × 3 niveles + persistencia';
